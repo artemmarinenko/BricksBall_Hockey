@@ -5,11 +5,13 @@ using UnityEngine;
 
 public class Puncher : MonoBehaviour
 {
+    [SerializeField] private float _distanceConstraint = 6;
+    [SerializeField] private float _speed = 20;
+    [SerializeField] private float _lerpThreshold = 0.1f;
+
     private Vector3 _startPosition;
     private IJoystiсk _joystick;
     private bool _isPunching = false;
-
-   // public bool IsPunching { get { return _isPunching; } }
 
     private void Awake()
     {
@@ -25,14 +27,15 @@ public class Puncher : MonoBehaviour
 
     void FixedUpdate()
     {
+
         if (!_isPunching) {
-            if (Mathf.Abs(transform.localPosition.z) < 6)
-                transform.localPosition = new Vector3(_startPosition.x, _startPosition.y, Mathf.Lerp(_startPosition.z, -6 * _joystick.DistanceRate, 20 * Time.deltaTime));
+            if (Mathf.Abs(transform.localPosition.z) < _distanceConstraint)
+                transform.localPosition = new Vector3(_startPosition.x, _startPosition.y, Mathf.Lerp(_startPosition.z, -_distanceConstraint * _joystick.DistanceRate, _speed * Time.deltaTime));
         }
         else
         {
-            transform.localPosition = new Vector3(_startPosition.x, _startPosition.y, Mathf.Lerp(transform.localPosition.z, _startPosition.z, 20 * Time.deltaTime));
-            if (Mathf.Abs(transform.localPosition.z - _startPosition.z) < 0.1f)
+            transform.localPosition = new Vector3(_startPosition.x, _startPosition.y, Mathf.Lerp(transform.localPosition.z, _startPosition.z, _speed * Time.deltaTime));
+            if (Mathf.Abs(transform.localPosition.z - _startPosition.z) < _lerpThreshold)
                 _isPunching = false;           
         }
         
