@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GameEvents;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -22,10 +23,13 @@ public class Joystick : Singleton<Joystick>, IJoystiсk, IPointerDownHandler, IP
 
     public Vector3 Direction { get { return _direction; } set { _direction = value; } }
     public float DistanceRate {
-        get { if ((_distance / _backgroundRadius) > 1)
+        get { 
+            if ((_distance / _backgroundRadius) > 1)
                 return 1;
               else
-                return _distance/_backgroundRadius; }}
+                return _distance/_backgroundRadius; 
+             }
+        }
 
     void Start()
     {
@@ -59,9 +63,10 @@ public class Joystick : Singleton<Joystick>, IJoystiсk, IPointerDownHandler, IP
 
     public virtual void OnEndDrag(PointerEventData eventData)
     {
-
+        EventAggregator.Post(this, new OnDragEndEvent { PunchRate = DistanceRate });
         _thumble.transform.position = _startThumplePosition;
         //Direction = Vector3.zero;
+        _distance = 0;
     }
 
     protected void SetBackgroundVisability(bool visible)
