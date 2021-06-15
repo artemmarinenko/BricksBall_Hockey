@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Crusher : MonoBehaviour
 {
-    Rigidbody _rigidbody;
+    private Rigidbody _rigidbody;
     private bool _isPunched = false;
     private float _punchRate;
     private void Awake()
@@ -18,7 +18,7 @@ public class Crusher : MonoBehaviour
         if(other.gameObject.TryGetComponent<Puncher>(out Puncher puncher) && _isPunched)
         {
                 transform.parent = null;
-                _rigidbody.AddForce(puncher.transform.forward * 10 * _punchRate, ForceMode.Impulse);
+                _rigidbody.AddForce(puncher.transform.forward * 15 * _punchRate, ForceMode.Impulse);
                 gameObject.layer = 8;
                 _isPunched = false;           
         }

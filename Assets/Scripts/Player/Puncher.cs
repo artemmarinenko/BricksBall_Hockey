@@ -9,7 +9,7 @@ public class Puncher : MonoBehaviour
     private IJoystiсk _joystick;
     private bool _isPunching = false;
 
-    public bool IsPunching { get { return _isPunching; } }
+   // public bool IsPunching { get { return _isPunching; } }
 
     private void Awake()
     {
@@ -33,8 +33,7 @@ public class Puncher : MonoBehaviour
         {
             transform.localPosition = new Vector3(_startPosition.x, _startPosition.y, Mathf.Lerp(transform.localPosition.z, _startPosition.z, 20 * Time.deltaTime));
             if (Mathf.Abs(transform.localPosition.z - _startPosition.z) < 0.1f)
-                _isPunching = false;
-            
+                _isPunching = false;           
         }
         
     }

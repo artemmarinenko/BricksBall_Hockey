@@ -6,5 +6,6 @@ namespace GameEvents
 {
     public class OnDragEndEvent { public float PunchRate; }
 
-    public class OnEnemyBoxCrushedEvent { }
+    public class OnCrusherDestroyEvent { }
+    public class OnBoxDestroyEvent { }
 }

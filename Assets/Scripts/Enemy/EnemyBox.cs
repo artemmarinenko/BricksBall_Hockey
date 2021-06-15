@@ -11,7 +11,8 @@ public class EnemyBox : MonoBehaviour
         {
             Destroy(gameObject);
             Destroy(collision.gameObject);
-            EventAggregator.Post(this, new OnEnemyBoxCrushedEvent());
+            EventAggregator.Post(this, new OnCrusherDestroyEvent());
+            EventAggregator.Post(this, new OnBoxDestroyEvent());
         }
     }
 }
