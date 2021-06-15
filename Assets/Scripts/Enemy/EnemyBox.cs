@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using GameEvents;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,6 +10,8 @@ public class EnemyBox : MonoBehaviour
         if(collision.gameObject.TryGetComponent<Crusher>(out Crusher crusher))
         {
             Destroy(gameObject);
+            Destroy(collision.gameObject);
+            EventAggregator.Post(this, new OnEnemyBoxCrushedEvent());
         }
     }
 }
