@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 
-public class Joystick : MonoBehaviour, IJoystiсk, IPointerDownHandler, IPointerUpHandler, IBeginDragHandler, IDragHandler, IEndDragHandler
+public class Joystick : Singleton<Joystick>, IJoystiсk, IPointerDownHandler, IPointerUpHandler, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
 
     [SerializeField] protected Image _background;
@@ -21,7 +21,11 @@ public class Joystick : MonoBehaviour, IJoystiсk, IPointerDownHandler, IPointer
     private Vector3 _direction;
 
     public Vector3 Direction { get { return _direction; } set { _direction = value; } }
-    public float DistanceRate { get { return _distance/_backgroundRadius; }}
+    public float DistanceRate {
+        get { if ((_distance / _backgroundRadius) > 1)
+                return 1;
+              else
+                return _distance/_backgroundRadius; }}
 
     void Start()
     {
@@ -57,7 +61,7 @@ public class Joystick : MonoBehaviour, IJoystiсk, IPointerDownHandler, IPointer
     {
 
         _thumble.transform.position = _startThumplePosition;
-        Direction = Vector3.zero;
+        //Direction = Vector3.zero;
     }
 
     protected void SetBackgroundVisability(bool visible)

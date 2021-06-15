@@ -5,4 +5,5 @@ using UnityEngine;
 public interface IJoystiсk
 {
     Vector3 Direction { get; set; }
+    float DistanceRate { get; }
 }

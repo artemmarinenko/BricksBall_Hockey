@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class RotateAround : MonoBehaviour
 {
-    [SerializeField] private GameObject _target;
-    private float angle;
 
-    private void Update()
+    [SerializeField] private Joystick _joystick;
+
+    private void FixedUpdate()
     {
-
-        transform.RotateAround(_target.transform.position, Vector3.up, 20 * Time.deltaTime);
+        Vector3 direction = new Vector3(_joystick.Direction.x, _joystick.Direction.z, _joystick.Direction.y);
+        transform.forward = -Vector3.Lerp(transform.forward, direction, 100 * Time.deltaTime);        
     }
-
+   
 }
