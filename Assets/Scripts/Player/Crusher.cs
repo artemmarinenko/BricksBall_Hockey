@@ -5,8 +5,11 @@ using UnityEngine;
 
 public class Crusher : MonoBehaviour
 {
-    [SerializeField] private float _punchForce = 10;
+    private const int IntDevider = 32;
 
+    [SerializeField] private float _punchForce = 10;
+    [SerializeField] private LayerMask _layer;
+    
     private Rigidbody _rigidbody;
     private bool _isPunched = false;
     private float _punchRate;
@@ -22,7 +25,7 @@ public class Crusher : MonoBehaviour
         {
                 transform.parent = null;
                 _rigidbody.AddForce(puncher.transform.forward * _punchForce * _punchRate, ForceMode.Impulse);
-                gameObject.layer = 8;
+                gameObject.layer = _layer.value % IntDevider;
                 _isPunched = false;           
         }
     }

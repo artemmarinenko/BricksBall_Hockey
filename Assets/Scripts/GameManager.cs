@@ -38,6 +38,7 @@ public class GameManager : Singleton<GameManager>
         SaveEnemyBoxesPositions();
     }
 
+
     private void CreateCrusher()
     {       
         Enemy.Instance.Crusher = Instantiate(_crusherPrefab, Player.Instance.transform).GetComponent<Crusher>().transform;
@@ -70,7 +71,7 @@ public class GameManager : Singleton<GameManager>
     {
         foreach(var enemyBoxPos in _enemyBoxesPositions)
         {
-            Instantiate(_enemyBoxPrefab, enemyBoxPos,Quaternion.identity);
+            Instantiate(_enemyBoxPrefab, enemyBoxPos,Quaternion.identity).transform.parent = _enemyBoxes.transform;
         }
         Enemy.Instance.Speed += _speedIncrease ;
 
