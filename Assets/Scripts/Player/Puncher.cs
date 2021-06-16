@@ -12,6 +12,7 @@ public class Puncher : MonoBehaviour
     private Vector3 _startPosition;
     private IJoystiсk _joystick;
     private bool _isPunching = false;
+    private Vector3 _positionDuringPunch;
 
     private void Awake()
     {
@@ -27,20 +28,31 @@ public class Puncher : MonoBehaviour
 
     void FixedUpdate()
     {
-
-        if (!_isPunching) {
+        PunchControll();
+    }
+    private void PunchControll()
+    {
+        if (!_isPunching)
+        {
             if (Mathf.Abs(transform.localPosition.z) < _distanceConstraint)
-                transform.localPosition = new Vector3(_startPosition.x, _startPosition.y, Mathf.Lerp(_startPosition.z, -_distanceConstraint * _joystick.DistanceRate, _speed * Time.deltaTime));
+            {
+                _positionDuringPunch.x = _startPosition.x;
+                _positionDuringPunch.y = _startPosition.y;
+                _positionDuringPunch.z = Mathf.Lerp(_startPosition.z, -_distanceConstraint * _joystick.DistanceRate, _speed * Time.fixedDeltaTime);
+                transform.localPosition = _positionDuringPunch;
+            }
+
         }
         else
         {
-            transform.localPosition = new Vector3(_startPosition.x, _startPosition.y, Mathf.Lerp(transform.localPosition.z, _startPosition.z, _speed * Time.deltaTime));
+            _positionDuringPunch.x = _startPosition.x;
+            _positionDuringPunch.y = _startPosition.y;
+            _positionDuringPunch.z = Mathf.Lerp(transform.localPosition.z, _startPosition.z, _speed * Time.fixedDeltaTime);
+            transform.localPosition = _positionDuringPunch;
             if (Mathf.Abs(transform.localPosition.z - _startPosition.z) < _lerpThreshold)
-                _isPunching = false;           
+                _isPunching = false;
         }
-        
     }
-
     private void OnDragEndEventHandler(object sender, OnDragEndEvent onDragEndEvent)
     {
         _isPunching = true;

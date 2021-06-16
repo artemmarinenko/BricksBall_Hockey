@@ -24,7 +24,7 @@ public class Player : Singleton<Player>
         _direction.y = direction.z;
         _direction.z = direction.y;
 
-        transform.forward = -Vector3.Lerp(transform.forward, _direction, speed * Time.deltaTime);
+        transform.forward = -Vector3.Lerp(transform.forward, _direction, speed * Time.fixedDeltaTime);
     }
 
 }
